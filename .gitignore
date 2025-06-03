@@ -1,0 +1,23 @@
+# Ambientes virtuais
+venv/
+.env
+
+# Arquivos Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Logs
+*.log
+
+# IDEs
+.vscode/
+.idea/
+
+# Arquivos temporários
+*.tmp
+*.bak
+*.swp
+
+# ngrok
+*.ngrok*
