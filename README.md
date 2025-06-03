@@ -34,5 +34,12 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 pip install -r requirements.txt
 ```
 ```bash
+ngrok http 5000 
+```
+Suba o Docker 
+```bash
+docker logs evolution_api
+```
+```bash
 python mvp_agente_recepcao/app.py
 ```
