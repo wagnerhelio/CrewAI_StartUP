@@ -61,6 +61,10 @@ def webhook():
             resposta_texto = str(resultado)
             print(f"🤖 Resposta gerada: {resposta_texto}")
 
+            # Salvar conversa em conversa.txt
+            with open('conversa.txt', 'a', encoding='utf-8') as arquivo:
+                arquivo.write(f"Usuário ({numero}): {mensagem}\nRecepcionista: {resposta_texto}\n---\n")
+
             resposta = {
                 "number": numero,
                 "text": resposta_texto,

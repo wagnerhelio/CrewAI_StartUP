@@ -1,0 +1,9 @@
+Usuário (556292422540): Teste
+Recepcionista: Olá! Recebi sua mensagem "Teste". Parece que tudo está funcionando corretamente. Se você tiver alguma dúvida ou precisar de assistência, estou aqui para ajudar!
+---
+Usuário (556292422540): Olá
+Recepcionista: Olá! Como posso ajudá-lo hoje?
+---
+Usuário (556292422540): Quero mensagens
+Recepcionista: Olá! Estou aqui para ajudar. Você poderia especificar que tipo de mensagens você gostaria de receber? São mensagens de atualizações, newsletters, mensagens promocionais ou algo mais? Por favor, me dê mais detalhes para que eu possa atendê-lo da melhor maneira possível.
+---
