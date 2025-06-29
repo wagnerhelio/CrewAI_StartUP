@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 import requests
 from langchain_openai import ChatOpenAI
 from crewai import Agent, Task, Crew
+import datetime
 
 # Carregar variáveis de ambiente
 load_dotenv()
@@ -36,17 +37,34 @@ recepcionista_virtual = Agent(
 @app.route('/webhook', methods=['POST'])
 def webhook():
     data = request.json
+    print("\n==================== NOVA REQUISIÇÃO ====================")
     print("🔎 JSON recebido:")
     print(data)
 
     try:
-        if data.get("event") == "messages.upsert":
+        event = data.get("event")
+        print(f"📌 Evento recebido: {event}")
+        if event == "messages.upsert":
             numero = data["data"]["key"]["remoteJid"].split("@")[0]
+            jid = data["data"]["key"]["remoteJid"]
             mensagem = data["data"]["message"].get("conversation", "")
-            print(f"📨 Mensagem recebida de {numero}: {mensagem}")
+            horario_pergunta = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            print(f"📨 Mensagem recebida de {numero}: {mensagem} às {horario_pergunta}")
 
+            # Consultar histórico da conversa
+            nome_arquivo = f'conversa({jid}).txt'
+            historico = ''
+            try:
+                with open(nome_arquivo, 'r', encoding='utf-8') as arquivo:
+                    historico = arquivo.read()
+                print(f"📚 Histórico encontrado para {jid} (últimos 1000 caracteres):\n{historico[-1000:]}")
+            except FileNotFoundError:
+                print(f"📚 Nenhum histórico encontrado para {jid}.")
+
+            # Adicionar histórico ao contexto da tarefa
+            contexto = f"Histórico da conversa:\n{historico[-1000:]}\n\n" if historico else ""
             tarefa = Task(
-                description=f"Responder educadamente à mensagem: '{mensagem}'",
+                description=f"{contexto}Responder educadamente à mensagem: '{mensagem}'",
                 expected_output="Uma resposta simpática e útil para o visitante.",
                 agent=recepcionista_virtual
             )
@@ -59,11 +77,14 @@ def webhook():
 
             resultado = crew.kickoff()
             resposta_texto = str(resultado)
-            print(f"🤖 Resposta gerada: {resposta_texto}")
+            horario_resposta = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            print(f"🤖 Resposta gerada: {resposta_texto} às {horario_resposta}")
 
-            # Salvar conversa em conversa.txt
-            with open('conversa.txt', 'a', encoding='utf-8') as arquivo:
-                arquivo.write(f"Usuário ({numero}): {mensagem}\nRecepcionista: {resposta_texto}\n---\n")
+            # Salvar conversa em conversa(jid).txt
+            nome_arquivo = f'conversa({jid}).txt'
+            with open(nome_arquivo, 'a', encoding='utf-8') as arquivo:
+                arquivo.write(f"[{horario_pergunta}] Usuário ({numero}): {mensagem}\n")
+                arquivo.write(f"[{horario_resposta}] Recepcionista: {resposta_texto}\n---\n")
 
             resposta = {
                 "number": numero,
@@ -77,15 +98,21 @@ def webhook():
                 "apikey": API_KEY_EVOLUTION
             }
 
+            print(f"\n➡️ Enviando resposta para EvolutionAPI: {EVOLUTION_API_URL}")
+            print(f"➡️ Payload: {resposta}")
+            print(f"➡️ Headers: {headers}")
             envio = requests.post(EVOLUTION_API_URL, json=resposta, headers=headers)
             print(f"📤 Status envio: {envio.status_code}")
             print(f"📤 Retorno EvolutionAPI: {envio.text}")
-
+        else:
+            print(f"⚠️ Evento não tratado: {event}")
+            print(f"Conteúdo recebido: {data}")
     except Exception as e:
         print(f"❌ Erro ao processar mensagem: {e}")
 
+    print("==================== FIM DA REQUISIÇÃO ====================\n")
     return jsonify({"status": "ok"})
 
 # Iniciar servidor local
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5000)

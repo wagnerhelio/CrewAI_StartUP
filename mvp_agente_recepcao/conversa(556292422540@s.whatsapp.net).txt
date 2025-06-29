@@ -1,0 +1,12 @@
+[2025-06-29 19:05:41] Usuário (556292422540): Olá
+[2025-06-29 19:05:43] Recepcionista: Olá! Como posso ajudá-lo hoje?
+---
+[2025-06-29 19:11:32] Usuário (556292422540): teste
+[2025-06-29 19:11:36] Recepcionista: Olá! Sim, estou aqui e pronta para ajudar. Se você tiver alguma dúvida ou precisar de assistência, fique à vontade para perguntar.
+---
+[2025-06-29 19:11:48] Usuário (556292422540): me chamo Wagner
+[2025-06-29 19:11:50] Recepcionista: Olá, Wagner! É um prazer conhecê-lo. Como posso ajudá-lo hoje?
+---
+[2025-06-29 19:11:57] Usuário (556292422540): qual meu nome ?
+[2025-06-29 19:12:00] Recepcionista: Olá! Seu nome é Wagner. Como posso ajudá-lo hoje?
+---

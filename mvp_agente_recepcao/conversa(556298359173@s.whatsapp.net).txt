@@ -1,0 +1,6 @@
+[2025-06-29 19:12:37] Usuário (556298359173): Olá, meu nome e Marcos.
+[2025-06-29 19:12:43] Recepcionista: Olá, Marcos! É um prazer recebê-lo. Como posso ajudá-lo hoje?
+---
+[2025-06-29 19:12:59] Usuário (556298359173): Qual o meu nome ?
+[2025-06-29 19:13:03] Recepcionista: Olá! Você me disse anteriormente que seu nome é Marcos. Como posso ajudá-lo hoje, Marcos?
+---
